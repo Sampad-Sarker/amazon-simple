@@ -3,6 +3,7 @@ import fakeData from '../../fakeData';
 import './Shop.css';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
+import { addToDatabaseCart } from '../../utilities/databaseManager';
 
 const Shop = () => {
 
@@ -21,6 +22,9 @@ const Shop = () => {
         setCart(newCart);  //update cart
 
         //console.log(cart);
+        const singleProductCount = newCart.filter(element => singleProduct.key === element.key); //search same product 
+        const count = singleProductCount.length;
+        addToDatabaseCart(singleProduct.key,count);  //product is added to local storage  by its key
     }
       
 
@@ -29,7 +33,7 @@ const Shop = () => {
             <div className="product-container">
                 
                     {
-                        products.map(element => <Product productItem={element} showAddToCartButton={true} buttonOnClick={onClickFunction}></Product>)
+                        products.map(element => <Product productItem={element} showAddToCartButton={true} buttonOnClick={onClickFunction} key={element.key}></Product>)   //for multiple map ,there should e a unique key property value
                     }
                 
             </div>

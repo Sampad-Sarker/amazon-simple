@@ -51,7 +51,7 @@ function App() {
 
 
       <footer>
-        <p>Developed with ❤️ by SampadSarker</p>
+        <p>Developed with <span role="img">❤️</span> by SampadSarker</p>
       </footer>
       
       
