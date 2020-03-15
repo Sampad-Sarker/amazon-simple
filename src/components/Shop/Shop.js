@@ -29,7 +29,7 @@ const Shop = () => {
             <div className="product-container">
                 
                     {
-                        products.map(element => <Product productItem={element} buttonOnClick={onClickFunction}></Product>)
+                        products.map(element => <Product productItem={element} showAddToCartButton={true} buttonOnClick={onClickFunction}></Product>)
                     }
                 
             </div>
