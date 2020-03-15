@@ -5,6 +5,7 @@ import Product from '../Product/Product';
 
 const ProductDetail =() => {
 
+    //must to use productKey,because in <Route path="/:productKey"> in app.js ,it is the dynamic url param
     const {productKey} = useParams();   //`useParams` hook here to access  the dynamic pieces of the URL.
     console.log(productKey);
 
@@ -12,7 +13,7 @@ const ProductDetail =() => {
     //console.log(individualProductDetail);
     return (
         <div>
-            <h2>{productKey } details coming ..........</h2>
+            <h2>Details of Product Model:{productKey }</h2>
             
             {/*parameter name must be productItem,because in <Product> component
             already accepting parameter which  name is productItem as props from shop.js. if 
@@ -24,8 +25,8 @@ const ProductDetail =() => {
             {/* showAddToCartButton={false} use for conditional 
             ui rendering,parameter name must be same 
             as <Product> component.so have to use 
-            showAddToCartButton as a parameter.
-            This exlanation is same as above one */}
+            showAddToCartButton as a parameter .
+            This explanation is same as above one */}
             <Product productItem = {individualProductDetail}  showAddToCartButton={false}></Product>
         </div>
     );

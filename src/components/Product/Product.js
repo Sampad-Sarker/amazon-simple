@@ -32,7 +32,8 @@ const Product = (props) => {
                 it can be done using if() condition.
                 
                 implemented way is shorthand style.
-                */}
+                by default condition value is true like  props.showAddToCartButton means it is true by default
+                *******************/}
                 {props.showAddToCartButton === true  &&   <button onClick={()=>props.buttonOnClick(props.productItem)}><FontAwesomeIcon icon={faShoppingCart} /> add to cart</button>}
 
             </div>
