@@ -22,9 +22,9 @@ const OrderReview = () => {
     }
 
     let thankMessage;
-    if(setOrderPlaced){
+    if(orderPlaced){
         //thankMessage=<img src={thankMessageImg} alt=""/>
-        thankMessage=<h1>Thank You for Purchase</h1>
+        thankMessage=<h1>Thank You for Purchasing</h1>
     }
 
     //remove btn activity
