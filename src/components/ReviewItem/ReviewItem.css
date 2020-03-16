@@ -1,4 +1,4 @@
-.productArea{
+.productArea-Review{
     display: flex;
     border-bottom: 2px solid lightgray;
     margin-right: 5px;
@@ -6,12 +6,14 @@
     padding: 5px;
 }
 
-.productArea img{
+.productArea-Review img{
     padding: 25px;
 }
 
-
-
+/* .product-name{
+    font-weight: 400;
+    color: blue;
+} */
 
 button{
     background-color: goldenrod;

@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './Cart.css';
-import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
     
@@ -11,8 +10,8 @@ const Cart = (props) => {
     let total=0;
     for (let i = 0; i < cart.length; i++) {  //total price
         const cartProduct = cart[i];
-        total = total+cartProduct.price;
-        
+        total = total+cartProduct.price*cartProduct.quantity;
+        //debugger;
     }
 
     let shippingCost=0;
@@ -39,12 +38,17 @@ const Cart = (props) => {
         <div>
             <h3>Order Summary</h3>
             <h4>Items Ordered:{cart.length}</h4>
-            <h4>Product Price:{formateValue(total)}</h4>
-            <h4><small>Shipping:{formateValue(shippingCost)}</small></h4>
-            <h4><small>Tax:{formateValue(taxRate)}</small></h4>
-             <h4>Total:{formateValue(total+shippingCost+taxRate)}</h4>
+            <h4>Product Price:${formateValue(total)}</h4>
+            <h4><small>Shipping:${formateValue(shippingCost)}</small></h4>
+            <h4><small>Tax:${formateValue(taxRate)}</small></h4>
+             <h4>Total:${formateValue(total+shippingCost+taxRate)}</h4>
 
-             <Link to="/order-review"><button>Order Review</button></Link>
+             {/* <Link to="/order-review"><button>Order Review</button></Link> */}
+
+            {/* conditional ui rendering */}
+            {
+                props.children
+            }
         </div>
     );
 };

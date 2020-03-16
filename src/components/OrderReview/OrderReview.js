@@ -1,18 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import './OrderReview.css';
-import { getDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
 import fakeData from '../../fakeData';
 import ReviewItem from '../ReviewItem/ReviewItem';
+import Cart from '../Cart/Cart';
+import thankMessageImg from '../../images/giphy.gif';
 
 const OrderReview = () => {
 
-    const [cartProduct,setCartProduct] = useState([]);
+    const [cartProduct,setCartProduct] = useState([]); //cart state
+
+    const [orderPlaced,setOrderPlaced] = useState(false);//place order state
+
+
+    const onClickPlaceOrder = () => {
+
+        setCartProduct([]); //make cart empty
+        setOrderPlaced(true); //when place order button click ,set true
+        processOrder(); //remove data from local storage
+
+    }
+
+    let thankMessage;
+    if(setOrderPlaced){
+        //thankMessage=<img src={thankMessageImg} alt=""/>
+        thankMessage=<h1>Thank You for Purchase</h1>
+    }
+
+    //remove btn activity
+    const onClickRemoveButton = (removedProductItem) =>{
+        //console.log("removed button click" ,removedProductItem);
+
+        const newCartProduct = cartProduct.filter(element => element.key!==removedProductItem);
+        //console.log(newCartProduct);
+
+        setCartProduct(newCartProduct);
+
+        // remove product item from localStorage and update the localStorage
+        removeFromDatabaseCart(removedProductItem);//item removed.this function came from databaseManager.js 
+
+
+
+    }
     
     useEffect(() =>{
-        const savedCartProduct = getDatabaseCart();
-        console.log(savedCartProduct);
+        const savedCartProduct = getDatabaseCart(); //retrieve data from local storage 
+        //console.log(savedCartProduct);
         const savedCartProductKey = Object.keys(savedCartProduct); //get the key name
-        console.log("unique Keys",savedCartProductKey);
+        //console.log("unique Keys",savedCartProductKey);
         // const savedCartProductNumber = Object.values(savedCartProduct); //get the values
         //console.log(savedCartProductNumber);
 
@@ -23,7 +58,7 @@ const OrderReview = () => {
 
             return findOutProduct;
         });
-        console.log("list of added product",desiredCartProduct);
+        //console.log("list of added product",desiredCartProduct);
         
         setCartProduct(desiredCartProduct);
 
@@ -31,13 +66,30 @@ const OrderReview = () => {
 
     }, []);
     return (
-        <div>
-            <h1>this is Order Review</h1>
-            <h3>Number of order:{cartProduct.length}</h3>
-                             
-            {
-                cartProduct.map(element => <ReviewItem cartProductItem ={element} key={element.key}></ReviewItem>)
-            }
+        <div className="shop-container-OrderReview">
+            
+            <div className="product-container-OrderReview">
+                {/* <h1>this is Order Review</h1>
+                <h3>Number of order:{cartProduct.length}</h3> */}
+                                
+                {
+                    cartProduct.map(element => <ReviewItem cartProductItem ={element} removeButtonClick={onClickRemoveButton}  key={element.key}></ReviewItem>)
+                }
+
+                <div className="img-style">
+                    {thankMessage}
+                </div>
+            </div>
+
+            <div className="cart-container-OrderReview">
+                <h3>Check Your Order</h3>
+                {/* parameter name must be cart,because cart component already has cart named parameter,without it(cart named parameter ) the component cann't execute both call   */}
+                <Cart cart={cartProduct}>
+                    <button onClick={onClickPlaceOrder}>Place Order</button>
+                </Cart>
+                
+            </div>
+            
                
         </div>
     );

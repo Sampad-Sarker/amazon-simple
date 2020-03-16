@@ -1,29 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fakeData from '../../fakeData';
 import './Shop.css';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
-import { addToDatabaseCart } from '../../utilities/databaseManager';
+import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
+import { Link } from 'react-router-dom';
 
 const Shop = () => {
 
-    //console.log(fakeData);
-    const first10Data=fakeData.slice(0,10);   //first 10 data   
-    const [products,setProducts] = useState(first10Data);  //server or database data
+        //console.log(fakeData);
+        const first10Data=fakeData.slice(0,10);   //first 10 data   
+        const [products,setProducts] = useState(first10Data);  //server or database data
 
-    const[cart,setCart] = useState([]); //cart state
+        const[cart,setCart] = useState([]); //cart state
+
+           
+        //sync data state in multiple component.After refreshing cart data of shop may not reset(zero value) 
+        useEffect(() =>{
+            const savedCartProduct = getDatabaseCart();//retrieve data from local storage 
+            //console.log(savedCartProduct);
+            const savedCartProductKey = Object.keys(savedCartProduct); //get the key name
+            //console.log("unique Keys",savedCartProductKey);
+            // const savedCartProductNumber = Object.values(savedCartProduct); //get the values
+            //console.log(savedCartProductNumber);
+    
+            const desiredCartProduct = savedCartProductKey.map( keyOfElement => {
+                const findOutProduct = fakeData.find(element => element.key === keyOfElement);
+                //desiredCartProduct.quantity = Object.values(savedCartProduct);//same
+                findOutProduct.quantity = savedCartProduct[keyOfElement];//same ,add a new key named quantity
+    
+                return findOutProduct;
+            });
+            //console.log("list of added product",desiredCartProduct);
+            
+            setCart(desiredCartProduct);
+    
+            
+    
+        }, []);
 
 
-
-    const onClickFunction = (singleProduct) =>{
+        //button onclick function
+        const onClickFunction = (singleProduct) =>{
         //console.log("clicked",singleProduct);
+        //add product from shop total shows NaN,to solve this bug this part of code is responsible 
+        const findOutCartProduct = cart.find(element => singleProduct.key === element.key); //search same product 
+        let count=1;
+        let newCart;
+        if(findOutCartProduct){
+            count = findOutCartProduct.quantity+1;
+            findOutCartProduct.quantity=count;
+            
+            const others = cart.filter(element => element.key!== singleProduct.key);
+            newCart= [...others,findOutCartProduct]; 
 
-        const newCart = [...cart,singleProduct];//adding new item to newCart
+        }else{
+            singleProduct.quantity = 1;
+            newCart =[...cart,singleProduct];
+
+        }
+        
+        // const count = findOutCartProduct.length;
+
+        // const newCart = [...cart,singleProduct];//adding new item to newCart
         setCart(newCart);  //update cart
 
         //console.log(cart);
-        const singleProductCount = newCart.filter(element => singleProduct.key === element.key); //search same product 
-        const count = singleProductCount.length;
+        //add product from shop total shows NaN,for this cause this part of code no longer need 
+        // const singleProductCount = newCart.filter(element => singleProduct.key === element.key); //search same product 
+        // const count = singleProductCount.length;
+
         addToDatabaseCart(singleProduct.key,count);  //product is added to local storage  by its key
     }
       
@@ -39,10 +85,11 @@ const Shop = () => {
             </div>
 
             <div className="cart-container">
-                <Cart cart={cart}></Cart>
+                <Cart cart={cart}>
+                    <Link to="/order-review"><button>Order Review</button></Link>
+                </Cart>
 
-                    {/* <h3>this is cart</h3>
-                    <h4>Order summary :{cart.length}</h4> */}
+                    
             </div>
             
         </div>

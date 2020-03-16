@@ -1,0 +1,14 @@
+.shop-container-OrderReview{
+    display: flex;
+}
+
+.product-container-OrderReview{
+    width: 70%;
+    margin-left: 20px;
+    margin-right: 5px;
+    border-right: 2px solid lightgray;
+}
+
+.img-style{
+    text-align: center;
+}
