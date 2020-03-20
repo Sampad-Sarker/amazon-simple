@@ -13,6 +13,7 @@ import OrderReview from './components/OrderReview/OrderReview';
 import Manage from './components/Manage/Manage';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import LogIn from './components/LogIn/LogIn';
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
 
           <Route path="/manage">
             <Manage></Manage>
+          </Route>
+
+          <Route path ="/login">
+            <LogIn></LogIn>
           </Route>
 
           <Route exact path="/">
