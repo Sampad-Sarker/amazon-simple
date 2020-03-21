@@ -5,6 +5,8 @@ import fakeData from '../../fakeData';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../Cart/Cart';
 import thankMessageImg from '../../images/giphy.gif';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../LogIn/useAuth';
 
 const OrderReview = () => {
 
@@ -65,6 +67,9 @@ const OrderReview = () => {
         
 
     }, []);
+
+
+    const auth = useAuth();  //custom hook
     return (
         <div className="shop-container-OrderReview">
             
@@ -79,13 +84,24 @@ const OrderReview = () => {
                 <div className="img-style">
                     {thankMessage}
                 </div>
+                {
+                    !cartProduct.length && <h1>Your cart is empty.<a href="/">Keep Shoping</a> </h1>
+
+
+                }
             </div>
 
             <div className="cart-container-OrderReview">
                 <h3>Check Your Order</h3>
                 {/* parameter name must be cart,because cart component already has cart named parameter,without it(cart named parameter ) the component cann't execute both call   */}
                 <Cart cart={cartProduct}>
-                    <button onClick={onClickPlaceOrder}>Place Order</button>
+                    <Link to="/shipment">
+                        {
+                            auth.user ? <button>Proceed to Shipment</button> :
+                            <button>Proceed to Login for Shipment</button>
+                        }
+                        
+                    </Link>
                 </Cart>
                 
             </div>

@@ -1,9 +1,15 @@
 
 import React from 'react';
 import './Cart.css';
+// import { UserContext } from '../../App';  //import only a context from app.js
 
 const Cart = (props) => {
+
+    // const user = useContext(UserContext);  // use the imported context 
+    // console.log(user);
+
     
+
     //console.log(props);
     const cart = props.cart;
 
@@ -49,6 +55,9 @@ const Cart = (props) => {
             {
                 props.children
             }
+
+            {/* //context info// */}
+            {/* <h4>{user}</h4>   */}
         </div>
     );
 };
