@@ -17,7 +17,7 @@ const Header = () => {
             <nav>
                 <a href="/shop">Shop</a>
                 <a href="/order-review">Order Review</a>
-                <a href="/manage">Manage Inventory</a>
+                <a href="/orders">Order History</a>
                 {/* <span style = {{color:'red'}}>{user}</span> */}
 
                 {

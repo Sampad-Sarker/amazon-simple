@@ -57,7 +57,7 @@ function App() {
               <OrderReview></OrderReview>
             </Route>
 
-            <Route path="/manage">
+            <Route path="/orders">
               <Manage></Manage>
             </Route>
 
