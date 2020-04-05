@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import fakeData from '../../fakeData';
+//import fakeData from '../../fakeData';
 import Product from '../Product/Product';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const ProductDetail =() => {
 
@@ -9,8 +11,24 @@ const ProductDetail =() => {
     const {productKey} = useParams();   //`useParams` hook here to access  the dynamic pieces of the URL.
     console.log(productKey);
 
-    const individualProductDetail = fakeData.find(element => element.key === productKey); //not using real data.stored fake data uses
+    //const individualProductDetail = fakeData.find(element => element.key === productKey); //not using real data.stored fake data uses
     //console.log(individualProductDetail);
+    
+
+    const[product,setProduct]=useState(null);
+
+    useEffect(()=>{
+        fetch("http://localhost:3001/product/"+productKey)
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+            setProduct(data);
+        })
+    },[])
+    
+    
+    
+    
     return (
         <div>
             <h2>Details of Product Model:{productKey }</h2>
@@ -27,7 +45,10 @@ const ProductDetail =() => {
             as <Product> component.so have to use 
             showAddToCartButton as a parameter .
             This explanation is same as above one */}
-            <Product productItem = {individualProductDetail}  showAddToCartButton={false}></Product>
+            {/* <Product productItem = {individualProductDetail}  showAddToCartButton={false}></Product> */}
+            {
+                product && <Product productItem = {product}  showAddToCartButton={false}></Product>
+            }
         </div>
     );
 };

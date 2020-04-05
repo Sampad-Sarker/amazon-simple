@@ -8,7 +8,7 @@ const Header = () => {
 
     //const user = useContext(UserContext);  //context
     const auth = useAuth();
-    console.log(auth.user);
+    //console.log(auth.user);
 
     return (
         <div className="header">
@@ -17,7 +17,7 @@ const Header = () => {
             <nav>
                 <a href="/shop">Shop</a>
                 <a href="/order-review">Order Review</a>
-                <a href="/orders">Order History</a>
+                <a href="/inventory">Inventory</a>
                 {/* <span style = {{color:'red'}}>{user}</span> */}
 
                 {

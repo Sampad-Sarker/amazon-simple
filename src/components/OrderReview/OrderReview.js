@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './OrderReview.css';
 import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
+//import fakeData from '../../fakeData';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../Cart/Cart';
 import thankMessageImg from '../../images/giphy.gif';
@@ -53,16 +53,30 @@ const OrderReview = () => {
         // const savedCartProductNumber = Object.values(savedCartProduct); //get the values
         //console.log(savedCartProductNumber);
 
-        const desiredCartProduct = savedCartProductKey.map( keyOfElement => {
-            const findOutProduct = fakeData.find(element => element.key === keyOfElement);
-            //desiredCartProduct.quantity = Object.values(savedCartProduct);//same
-            findOutProduct.quantity = savedCartProduct[keyOfElement];//same ,add a new key named quantity
+        fetch("http://localhost:3001/getProductsByKey",{
+            method:"POST",
+            body:JSON.stringify(savedCartProductKey),
+            headers:{"Content-type":"application/json"}
+        })
+        .then(res=>res.json())
+        .then(data => {
+            //console.log(data);
 
-            return findOutProduct;
-        });
-        //console.log("list of added product",desiredCartProduct);
+            const desiredCartProduct = savedCartProductKey.map( keyOfElement => {
+                const findOutProduct = data.find(element => element.key === keyOfElement);
+                //desiredCartProduct.quantity = Object.values(savedCartProduct);//same
+                findOutProduct.quantity = savedCartProduct[keyOfElement];//same ,add a new key named quantity
+    
+                return findOutProduct;
+            });
+            //console.log("list of added product",desiredCartProduct);
+            
+            setCartProduct(desiredCartProduct);
+
+        })
+
+
         
-        setCartProduct(desiredCartProduct);
 
         
 

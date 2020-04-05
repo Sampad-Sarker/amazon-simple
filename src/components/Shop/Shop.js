@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import fakeData from '../../fakeData';
+//import fakeData from '../../fakeData';
 import './Shop.css';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
@@ -9,9 +9,22 @@ import { Link } from 'react-router-dom';
 const Shop = () => {
 
         //console.log(fakeData);
-        const first10Data=fakeData.slice(0,10);   //first 10 data   
-        const [products,setProducts] = useState(first10Data);  //server or database data
+        //const first10Data=fakeData.slice(0,10);   //first 10 data   
+        //const [products,setProducts] = useState(first10Data);  //server or database data
 
+        const [products,setProducts] = useState([]);
+        useEffect(()=>{
+            fetch("http://localhost:3001/products")
+            .then(res=>res.json())
+            .then(data=>{
+                //console.log("data from database",data);
+                setProducts(data);
+            })
+        },[])
+        
+        
+        
+        
         const[cart,setCart] = useState([]); //cart state
 
            
@@ -24,20 +37,23 @@ const Shop = () => {
             // const savedCartProductNumber = Object.values(savedCartProduct); //get the values
             //console.log(savedCartProductNumber);
     
-            const desiredCartProduct = savedCartProductKey.map( keyOfElement => {
-                const findOutProduct = fakeData.find(element => element.key === keyOfElement);
-                //desiredCartProduct.quantity = Object.values(savedCartProduct);//same
-                findOutProduct.quantity = savedCartProduct[keyOfElement];//same ,add a new key named quantity
+            if(products.length>0){
+
+                const desiredCartProduct = savedCartProductKey.map( keyOfElement => {
+                    const findOutProduct = products.find(element => element.key === keyOfElement);
+                    //desiredCartProduct.quantity = Object.values(savedCartProduct);//same
+                    findOutProduct.quantity = savedCartProduct[keyOfElement];//same ,add a new key named quantity
+        
+                    return findOutProduct;
+                });
+                //console.log("list of added product",desiredCartProduct);
+                
+                setCart(desiredCartProduct);
+            }
     
-                return findOutProduct;
-            });
-            //console.log("list of added product",desiredCartProduct);
             
-            setCart(desiredCartProduct);
     
-            
-    
-        }, []);
+        }, [products]);
 
 
         //button onclick function

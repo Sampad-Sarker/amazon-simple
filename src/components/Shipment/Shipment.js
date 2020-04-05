@@ -2,13 +2,34 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Shipment.css'
 import { useAuth } from '../LogIn/useAuth';
+import { getDatabaseCart, processOrder } from '../../utilities/databaseManager';
 
 const Shipment = () => {
 
     const auth = useAuth();
 
     const { register, handleSubmit, watch, errors } = useForm();
-    const onSubmit = data => { console.log(data) }
+    
+    
+    
+    const onSubmit = data => { 
+      //console.log("form information:",data);
+      
+      const savedCart = getDatabaseCart();
+      const orderDetails = {email:auth.user.email,cart:savedCart};
+
+      fetch("http://localhost:3001/placeOrder",{
+        method:"POST",
+        body:JSON.stringify(orderDetails),
+        headers:{"Content-type":"application/json"}
+      })
+      .then(res => res.json())
+      .then(data =>{
+        console.log("after fetch :",data);
+        alert("Place order successful with order id:"+data._id);
+        processOrder();
+      })
+    }
 
     //console.log(watch('example')) // watch input value by passing the name of it
 
@@ -44,6 +65,7 @@ const Shipment = () => {
       <input type="submit" />
     
     </form>
+    // <button>SignIn</button>
   )
 };
 
