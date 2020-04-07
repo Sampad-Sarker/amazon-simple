@@ -14,7 +14,7 @@ const Shop = () => {
 
         const [products,setProducts] = useState([]);
         useEffect(()=>{
-            fetch("http://localhost:3001/products")
+            fetch("https://shrouded-ridge-17870.herokuapp.com/products")
             .then(res=>res.json())
             .then(data=>{
                 //console.log("data from database",data);

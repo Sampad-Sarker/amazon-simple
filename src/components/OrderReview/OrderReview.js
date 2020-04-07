@@ -53,7 +53,7 @@ const OrderReview = () => {
         // const savedCartProductNumber = Object.values(savedCartProduct); //get the values
         //console.log(savedCartProductNumber);
 
-        fetch("http://localhost:3001/getProductsByKey",{
+        fetch("https://shrouded-ridge-17870.herokuapp.com/getProductsByKey",{
             method:"POST",
             body:JSON.stringify(savedCartProductKey),
             headers:{"Content-type":"application/json"}

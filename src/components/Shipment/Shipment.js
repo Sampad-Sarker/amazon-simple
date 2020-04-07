@@ -36,7 +36,7 @@ const Shipment = () => {
         payment:payment
       };
 
-      fetch("http://localhost:3001/placeOrder",{
+      fetch("https://shrouded-ridge-17870.herokuapp.com/placeOrder",{
         method:"POST",
         body:JSON.stringify(orderDetails),
         headers:{"Content-type":"application/json"}

@@ -8,7 +8,7 @@ const Inventory = () => {
         const product = fakeData[0];
         console.log("before add",product);
 
-        fetch("http://localhost:3001/addProduct",{   //server address
+        fetch("https://shrouded-ridge-17870.herokuapp.com/addProduct",{   //server address
 
             method:"POST",
             body:JSON.stringify(fakeData),
@@ -22,7 +22,7 @@ const Inventory = () => {
         <div>
             <h1>Add inventory to sell more.......</h1>
 
-            <button onClick={addInventoryBtn}>add inventory</button>
+            {/* <button onClick={addInventoryBtn}>add inventory</button> */}
         </div>
     );
 };
