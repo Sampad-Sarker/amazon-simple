@@ -1,10 +1,12 @@
 const getUser = () => {
-    const existingUser = sessionStorage.getItem('userId');
+    // const existingUser = sessionStorage.getItem('userId');
+    const existingUser = localStorage.getItem('userId');
     if (existingUser) {
         return existingUser; 
     } else {
         const newUser = 'user-' + new Date().getTime();
-        sessionStorage.setItem('userId', newUser)
+        // sessionStorage.setItem('userId', newUser)
+        localStorage.setItem('userId', newUser)
         return newUser;
     }
 }
@@ -38,8 +40,12 @@ const processOrder = (cart) => {
     localStorage.removeItem(getDataKey());
 }
 
+const clearLocalStorageDatabaseCart = (cart) => {
+  localStorage.removeItem(getDataKey());
+}
 
-export { addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, processOrder };
+
+export { addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, processOrder,clearLocalStorageDatabaseCart };
 
 
 // polyfill to support older browser

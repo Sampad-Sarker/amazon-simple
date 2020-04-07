@@ -11,7 +11,7 @@ import {
   Redirect
 } from "react-router-dom";
 import OrderReview from './components/OrderReview/OrderReview';
-import Manage from './components/Manage/Manage';
+import Inventory from './components/Inventory/Inventory';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import LogIn from './components/LogIn/LogIn';
@@ -57,8 +57,8 @@ function App() {
               <OrderReview></OrderReview>
             </Route>
 
-            <Route path="/orders">
-              <Manage></Manage>
+            <Route path="/inventory">
+              <Inventory></Inventory>
             </Route>
 
             <Route path ="/login">
